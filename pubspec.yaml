@@ -30,7 +30,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.2.4
-  easy_localization: 3.0.1
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -69,9 +70,6 @@ flutter:
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
-  assets:
-    - assets/translations/
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
