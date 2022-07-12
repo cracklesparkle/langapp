@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:langapp/pages/mainpage.dart';
 
 class MButton extends StatelessWidget{
   const MButton({
@@ -68,6 +70,75 @@ class CButton extends StatelessWidget{
           ),
         ),
       onPressed: onPressedfunction
+    );
+  }
+}
+
+//Button for language select on top navigation bar
+class TopNavBarButton extends StatelessWidget{
+  void _showActionSheet(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: Text('welcome-page-button-choose-language-popup-title'.tr()),
+        message: Text('welcome-page-button-choose-language-popup-descr'.tr()),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            onPressed: () {
+              //Navigator.pop(context);
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => MainPage(language: 1)
+                  )
+                );
+            },
+            child: Text('lang1-name'.tr()),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => MainPage(language: 2)
+                  )
+                );
+            },
+            child: Text('lang2-name'.tr()),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => MainPage(language: 3)
+                  )
+                );
+            },
+            child: Text('lang3-name'.tr()),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => MainPage(language: 4)
+                  )
+                );
+            },
+            child: Text('lang4-name'.tr()),
+          )
+        ],
+      ),
+    );
+  }
+  
+  @override
+  Widget build(BuildContext context){
+    return CupertinoButton(
+            padding: EdgeInsets.all(0),
+            child: Icon(CupertinoIcons.globe),
+            onPressed: (){_showActionSheet(context);},
     );
   }
 }
@@ -162,43 +233,56 @@ class ImageCard extends StatelessWidget{
   final String title;
   final Color color;
   final String imageAsset;
+  final Function() onPressedFunction;
 
   const ImageCard({
     Key? key,
     required this.title,
     required this.color,
     required this.imageAsset,
+    required this.onPressedFunction
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context){
     
-    return SizedBox(
-      height: 180,
-      width: 180,
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        shadowColor: CupertinoColors.inactiveGray,
-        elevation: 8,
-        color: Color.fromRGBO(110, 110, 110, 1),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(imageAsset, height: 120, fit: BoxFit.cover),
+    return CupertinoButton(
+      onPressed: onPressedFunction,
+      child: SizedBox(
+        height: 165,
+        width: 165,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          shadowColor: CupertinoColors.inactiveGray,
+          elevation: 8,
+          color: Color.fromRGBO(110, 110, 110, 1),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                alignment: Alignment.bottomCenter,
+                color: color,
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      child: Image.asset(imageAsset, height: 100, fit: BoxFit.contain),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(2),
-              child: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
-            )
-          ],
-        )
-        ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(overflow: TextOverflow.fade, title, textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                ),
+              )
+            ],
+          )
+          ),
+      ),
     );
   }
 }

@@ -9,14 +9,11 @@ class SettingsPage extends StatelessWidget{
       middle: Text('bottom-navbar-item-4'.tr()),
     ),
     child: SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            
-          ]
-        ),
+     child: CupertinoScrollbar(
+      child: ListView(
+        
       )
+     )
     ),
   );
 }

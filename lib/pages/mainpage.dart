@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:langapp/pages/mappage.dart';
 import 'package:langapp/pages/newpage.dart';
+import 'package:langapp/pages/settingspage.dart';
 
 class MainPage extends StatelessWidget{
   final int language;
@@ -67,9 +68,7 @@ class MainPage extends StatelessWidget{
         case 3:
         default:
           return CupertinoTabView(
-            builder: (context) => NewPage(
-              title: 'Tab 4 on lang $language', 
-              color: CupertinoColors.systemYellow
+            builder: (context) => SettingsPage(
             )
           );
       }
