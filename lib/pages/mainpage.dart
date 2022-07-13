@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:langapp/pages/learnpage.dart';
 import 'package:langapp/pages/mappage.dart';
 import 'package:langapp/pages/newpage.dart';
 import 'package:langapp/pages/settingspage.dart';
+import 'package:langapp/pages/videolistpage.dart';
 
 class MainPage extends StatelessWidget{
   final int language;
@@ -53,17 +56,11 @@ class MainPage extends StatelessWidget{
           );
         case 1:
           return CupertinoTabView(
-            builder: (context) => NewPage(
-              title: 'Tab 2 on lang $language', 
-              color: CupertinoColors.activeOrange
-            )
+            builder: (context) => LearnPage(title: 'Test', color: Colors.red)
           );
         case 2:
           return CupertinoTabView(
-            builder: (context) => NewPage(
-              title: 'Tab 3 on lang $language', 
-              color: CupertinoColors.activeBlue
-            )
+            builder: (context) => VideoListPage()
           );
         case 3:
         default:
