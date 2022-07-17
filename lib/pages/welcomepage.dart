@@ -3,12 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:langapp/pages/mainpage.dart';
 import 'package:langapp/pages/mappage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/customwidgets.dart';
 
 class WelcomePage extends StatelessWidget{
   const WelcomePage({Key? key}) : super(key: key);
 
+  void firstLaunchBehavior(int lang) async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('firstLaunch', false);
+
+    //set language
+    await prefs.setInt('lang', lang);
+  }
   // This shows a CupertinoModalPopup which hosts a CupertinoActionSheet.
   void _showActionSheet(BuildContext context) {
     showCupertinoModalPopup<void>(
@@ -26,6 +34,7 @@ class WelcomePage extends StatelessWidget{
                   builder: (context) => MainPage(language: 1)
                   )
                 );
+              firstLaunchBehavior(1);
             },
             child: Text('lang1-name'.tr()),
           ),
@@ -37,6 +46,7 @@ class WelcomePage extends StatelessWidget{
                   builder: (context) => MainPage(language: 2)
                   )
                 );
+              firstLaunchBehavior(2);
             },
             child: Text('lang2-name'.tr()),
           ),
@@ -48,6 +58,7 @@ class WelcomePage extends StatelessWidget{
                   builder: (context) => MainPage(language: 3)
                   )
                 );
+              firstLaunchBehavior(3);
             },
             child: Text('lang3-name'.tr()),
           ),
@@ -59,6 +70,7 @@ class WelcomePage extends StatelessWidget{
                   builder: (context) => MainPage(language: 4)
                   )
                 );
+              firstLaunchBehavior(4);
             },
             child: Text('lang4-name'.tr()),
           )

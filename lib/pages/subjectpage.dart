@@ -26,7 +26,7 @@ class SubjectPage extends StatelessWidget{
     //backgroundColor: color,
     navigationBar: CupertinoNavigationBar(
       middle: Text(title),
-      trailing: Icon(CupertinoIcons.globe),
+      trailing: TopNavBarButton(),
     ),
     child: SafeArea(
       child: Center(

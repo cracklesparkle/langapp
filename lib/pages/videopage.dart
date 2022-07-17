@@ -9,7 +9,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPage extends StatefulWidget{
   final String url;
-  const VideoPage({Key? key, required this.url }) : super(key: key);
+  final String title;
+  final String description;
+  const VideoPage({Key? key, required this.url, required this.title, required this.description }) : super(key: key);
 
   @override
   _VideoPageState createState() => _VideoPageState();
@@ -73,16 +75,17 @@ class _VideoPageState extends State<VideoPage>{
                 children: [
                   player,
                   SizedBox(height: 8),
-                  Text(controller.metadata.title),
+                  Text(widget.title),
                   SizedBox(height: 8),
-                  Text(controller.metadata.duration.inMinutes.toString()),
-                  ElevatedButton(
-                    onPressed: (){
-                      const url = 'https://www.youtube.com/watch?v=0_fgxq9xtzI';
-                      controller.load(YoutubePlayer.convertUrlToId(url)!);
-                    }, 
-                    child: const Text('Next video'),
-                  ),
+                  Text(widget.description)
+                  //Text(controller.metadata.duration.inMinutes.toString()),
+                  // ElevatedButton(
+                  //   onPressed: (){
+                  //     const url = 'https://www.youtube.com/watch?v=0_fgxq9xtzI';
+                  //     controller.load(YoutubePlayer.convertUrlToId(url)!);
+                  //   }, 
+                  //   child: const Text('Next video'),
+                  // ),
 
                 ]
               ),

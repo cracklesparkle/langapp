@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:langapp/data/videos.dart';
 import 'package:langapp/helpers/appcolors.dart';
 import 'package:langapp/helpers/customwidgets.dart';
@@ -19,6 +22,13 @@ class _VideoListPageState extends State<VideoListPage>{
   bool isLoading = false;
   List<VideoItem> videos = [];
 
+  static Future<List<VideoItem>> getVideos() async{
+    const url = 'http://45.67.35.180/json/lang1/cat1/videos.json';
+    final response = await get(Uri.parse(url));
+    final body = jsonDecode(utf8.decode(response.bodyBytes));
+    return body.map<VideoItem>(VideoItem.fromJson).toList();
+  }
+
   @override
   void initState(){
     super.initState();
@@ -34,7 +44,8 @@ class _VideoListPageState extends State<VideoListPage>{
 
     //await Future.delayed(Duration(seconds: 2), (){});
 
-    videos = List.of(allVideos);
+    //videos = List.of(allVideos);
+    videos = await getVideos();
     setState(() {
       isLoading = false;
     });
@@ -59,12 +70,14 @@ class _VideoListPageState extends State<VideoListPage>{
                 padding: const EdgeInsets.all(10),
                 itemCount: isLoading ? 5 : videos.length,
                 itemBuilder: (context, index){
-                  //if (isLoading){
-                  //  return buildListShimmer();
-                  //}
-                  final video = videos[index];
-            
-                  return buildVideoItem(video);
+                  if (isLoading){
+                   return buildListShimmer();
+                  }
+                  else {
+                    final video = videos[index];
+                    return buildVideoItem(video);
+                  }
+                  
                 },
               ),
             ),
@@ -88,19 +101,25 @@ class _VideoListPageState extends State<VideoListPage>{
         onTap: (){
                 Navigator.of(context, rootNavigator: true).push(
                   CupertinoPageRoute(
-                    builder: (context) => VideoPage(url: video.url,)
+                    builder: (context) => VideoPage(url: video.url, description: video.description, title: video.title,)
                     ),
                 );
               },
-        leading: CachedNetworkImage(
-          placeholder: (context, url){
-            return ShimmerWidget.circular(
-              width: 64, 
-              height: 64,
-              shapeBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            );
-          },
-          imageUrl: video.thumbnailUrl,
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: CachedNetworkImage(
+            fit: BoxFit.fill,
+            width: 64,
+            height: 64,
+            placeholder: (context, url){
+              return ShimmerWidget.circular(
+                width: 64, 
+                height: 64,
+                shapeBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              );
+            },
+            imageUrl: video.thumbnailUrl,
+          ),
         ),
         title: Text(
           video.title,

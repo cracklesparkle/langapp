@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:langapp/models/quiz/model.dart';
 import 'package:langapp/pages/mainpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MButton extends StatelessWidget{
@@ -78,6 +79,11 @@ class CButton extends StatelessWidget{
 
 //Button for language select on top navigation bar
 class TopNavBarButton extends StatelessWidget{
+  void setLang(int lang) async{
+    final prefs = await SharedPreferences.getInstance();
+    //set language
+    await prefs.setInt('lang', lang);
+  }
   void _showActionSheet(BuildContext context) {
     showCupertinoModalPopup<void>(
       context: context,
@@ -88,45 +94,49 @@ class TopNavBarButton extends StatelessWidget{
           CupertinoActionSheetAction(
             onPressed: () {
               //Navigator.pop(context);
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 CupertinoPageRoute(
                   builder: (context) => MainPage(language: 1)
                   )
                 );
+              setLang(1);
             },
             child: Text('lang1-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 CupertinoPageRoute(
                   builder: (context) => MainPage(language: 2)
                   )
                 );
+              setLang(2);
             },
             child: Text('lang2-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 CupertinoPageRoute(
                   builder: (context) => MainPage(language: 3)
                   )
                 );
+              setLang(3);
             },
             child: Text('lang3-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 CupertinoPageRoute(
                   builder: (context) => MainPage(language: 4)
                   )
                 );
+              setLang(4);
             },
             child: Text('lang4-name'.tr()),
           )
@@ -526,13 +536,5 @@ class ShimmerWidget extends StatelessWidget{
         
       ),
     );
-  }
-}
-
-class AudioThumbnailPlaceholder extends StatelessWidget{
-
-  @override
-  Widget build(BuildContext context){
-    return Scaffold();
   }
 }

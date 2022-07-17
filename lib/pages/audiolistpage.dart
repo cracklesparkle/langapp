@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:langapp/data/audios.dart';
 import 'package:langapp/data/videos.dart';
 import 'package:langapp/helpers/appcolors.dart';
@@ -20,6 +23,13 @@ class AudioListPage extends StatefulWidget{
 }
 
 class _AudioListPageState extends State<AudioListPage>{
+  static Future<List<AudioItem>> getAudios() async{
+    const url = 'http://45.67.35.180/json/lang1/cat1/audios.json';
+    final response = await get(Uri.parse(url));
+    final body = jsonDecode(utf8.decode(response.bodyBytes));
+    return body.map<AudioItem>(AudioItem.fromJson).toList();
+  }
+
   bool isLoading = false;
   List<AudioItem> audios = [];
 
@@ -37,8 +47,8 @@ class _AudioListPageState extends State<AudioListPage>{
     });
 
     //await Future.delayed(Duration(seconds: 2), (){});
-  
-    audios = List.of(allAudios);
+    audios = await getAudios();
+    //audios = List.of(allAudios);
     setState(() {
       isLoading = false;
     });
@@ -63,12 +73,13 @@ class _AudioListPageState extends State<AudioListPage>{
                 padding: const EdgeInsets.all(10),
                 itemCount: isLoading ? 5 : audios.length,
                 itemBuilder: (context, index){
-                  //if (isLoading){
-                  //  return buildListShimmer();
-                  //}
-                  final audio = audios[index];
+                  if (isLoading){
+                    return buildListShimmer();
+                  } else{
+                    final audio = audios[index];
             
-                  return buildAudioItem(audio);
+                    return buildAudioItem(audio);
+                  }
                 },
               ),
             ),

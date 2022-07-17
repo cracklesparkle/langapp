@@ -12,7 +12,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-
+  final firstLaunch = prefs.getBool('firstLaunch') ?? true;
+  final lang = prefs.getInt('lang') ?? 0;
   runApp(
     EasyLocalization(
       supportedLocales: [
@@ -21,19 +22,19 @@ void main() async {
       ],
       path: 'assets/translations', // <-- change the path of the translation files 
       fallbackLocale: Locale('ru', 'RU'),
-      child: MainApp()
+      child: MainApp(firstLaunch: firstLaunch, lang: lang,)
     )
   );
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final bool firstLaunch;
+  final int lang;
+  const MainApp({super.key, required this.firstLaunch, required this.lang});
 
   @override
   Widget build(BuildContext context) {
-    // set json file directory
-    // default value is ['lib/i18n']
-
+    
     return CupertinoApp(
       theme: CupertinoThemeData(
         textTheme: CupertinoTextThemeData(
@@ -52,7 +53,7 @@ class MainApp extends StatelessWidget {
       locale: context.locale,
       title: 'Welcome to Flutter',
       //home: MainPage()
-      home: WelcomePage()
+      home: firstLaunch == true ? WelcomePage() : MainPage(language: lang)
     );
   }
 }
