@@ -39,6 +39,10 @@ class MainApp extends StatelessWidget {
         textTheme: CupertinoTextThemeData(
           textStyle: TextStyle(
             fontFamily: 'Montserrat',
+            color: CupertinoDynamicColor.withBrightness(
+              color: CupertinoColors.black,
+              darkColor: CupertinoColors.white,
+            ),
             shadows: [Shadow(offset: Offset.fromDirection(1.0), blurRadius: 5, color: CupertinoColors.inactiveGray)]
           )
         )

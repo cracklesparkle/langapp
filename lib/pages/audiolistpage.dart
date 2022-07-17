@@ -2,22 +2,26 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:langapp/data/audios.dart';
 import 'package:langapp/data/videos.dart';
 import 'package:langapp/helpers/appcolors.dart';
 import 'package:langapp/helpers/customwidgets.dart';
 import 'package:langapp/models/videoitem.dart';
+import 'package:langapp/pages/audiopage.dart';
 import 'package:langapp/pages/newpage.dart';
 import 'package:langapp/pages/subjectpage.dart';
 import 'package:langapp/pages/videopage.dart';
 
-class VideoListPage extends StatefulWidget{
+import '../models/audioitem.dart';
+
+class AudioListPage extends StatefulWidget{
   @override
-  _VideoListPageState createState() => _VideoListPageState();
+  _AudioListPageState createState() => _AudioListPageState();
 }
 
-class _VideoListPageState extends State<VideoListPage>{
+class _AudioListPageState extends State<AudioListPage>{
   bool isLoading = false;
-  List<VideoItem> videos = [];
+  List<AudioItem> audios = [];
 
   @override
   void initState(){
@@ -33,8 +37,8 @@ class _VideoListPageState extends State<VideoListPage>{
     });
 
     //await Future.delayed(Duration(seconds: 2), (){});
-
-    videos = List.of(allVideos);
+  
+    audios = List.of(allAudios);
     setState(() {
       isLoading = false;
     });
@@ -44,27 +48,27 @@ class _VideoListPageState extends State<VideoListPage>{
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('category-video'.tr()),
+        middle: Text('category-audio'.tr()),
         trailing: TopNavBarButton()
       ),
       child: SafeArea(
         child: Column(
           children: [
             Container(
-              child: Text('category-video-list-description'.tr()),
+              child: Text('category-audio-list-description'.tr()),
               padding: EdgeInsets.all(10),
             ),
             Flexible(
               child: ListView.builder(
                 padding: const EdgeInsets.all(10),
-                itemCount: isLoading ? 5 : videos.length,
+                itemCount: isLoading ? 5 : audios.length,
                 itemBuilder: (context, index){
                   //if (isLoading){
                   //  return buildListShimmer();
                   //}
-                  final video = videos[index];
+                  final audio = audios[index];
             
-                  return buildVideoItem(video);
+                  return buildAudioItem(audio);
                 },
               ),
             ),
@@ -74,7 +78,7 @@ class _VideoListPageState extends State<VideoListPage>{
     );
   }
 
-  Widget buildVideoItem(VideoItem video){
+  Widget buildAudioItem(AudioItem audio){
     return Material(
       child: ListTile(
         // leading: CircleAvatar(
@@ -88,11 +92,19 @@ class _VideoListPageState extends State<VideoListPage>{
         onTap: (){
                 Navigator.of(context, rootNavigator: true).push(
                   CupertinoPageRoute(
-                    builder: (context) => VideoPage(url: video.url,)
+                    builder: (context) => AudioPage(url: audio.url, thumbnailUrl: audio.thumbnailUrl, title: audio.title, subtitle: audio.subtitle, description: audio.description,)
                     ),
                 );
               },
-        leading: CachedNetworkImage(
+        leading: audio.thumbnailUrl == ''
+            ? SizedBox(
+              width: 64,
+              height: 64,
+              child: Container(
+                child: Icon(CupertinoIcons.headphones),
+              ),
+            )
+            : CachedNetworkImage(
           placeholder: (context, url){
             return ShimmerWidget.circular(
               width: 64, 
@@ -100,14 +112,14 @@ class _VideoListPageState extends State<VideoListPage>{
               shapeBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             );
           },
-          imageUrl: video.thumbnailUrl,
+          imageUrl: audio.thumbnailUrl,
         ),
         title: Text(
-          video.title,
+          audio.title,
           style: TextStyle(fontSize: 16),
         ),
         subtitle: Text(
-          video.description,
+          audio.subtitle,
           style: TextStyle(fontSize: 14),
           maxLines: 1,
         ),

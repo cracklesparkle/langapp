@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:langapp/models/quiz/model.dart';
 import 'package:langapp/pages/mainpage.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MButton extends StatelessWidget{
   const MButton({
@@ -233,15 +234,17 @@ class WordCardWidget extends StatelessWidget{
 class ImageCard extends StatelessWidget{
   final String title;
   final Color color;
-  final String imageAsset;
+  final String? imageAsset;
+  final IconData? iconData;
   final Function() onPressedFunction;
 
   const ImageCard({
     Key? key,
     required this.title,
     required this.color,
-    required this.imageAsset,
-    required this.onPressedFunction
+    this.imageAsset,
+    this.iconData,
+    required this.onPressedFunction,
   }) : super(key: key);
 
   @override
@@ -264,14 +267,19 @@ class ImageCard extends StatelessWidget{
               Container(
                 alignment: Alignment.bottomCenter,
                 color: color,
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      child: Image.asset(imageAsset, height: 100, fit: BoxFit.contain),
-                    ),
-                  ],
-                ),
+                child: imageAsset != null 
+                        ? Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                              child: Image.asset(imageAsset!, height: 100, fit: BoxFit.contain)
+                            ),
+                          ],
+                )
+                : Container(
+                    child: iconData != null ? Icon(iconData!, size: 60,) : Icon(CupertinoIcons.xmark, size: 60),
+                    height: 100,
+                  )
               ),
               Container(
                 alignment: Alignment.center,
@@ -483,5 +491,48 @@ class ResultPage extends StatelessWidget{
           child: Text('You got $score/${questions.length}')
         )
     );
+  }
+}
+
+class ShimmerWidget extends StatelessWidget{
+  final double width;
+  final double height;
+  final ShapeBorder shapeBorder; 
+
+  const ShimmerWidget.rectangular({
+    this.width = double.infinity,
+    required this.height,
+  }) : this.shapeBorder = const RoundedRectangleBorder();
+
+  const ShimmerWidget.circular({
+    required this.width,
+    required this.height,
+    this.shapeBorder = const CircleBorder(),
+  });
+
+  @override
+  Widget build(BuildContext context){
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[400]!,
+      highlightColor: Colors.grey[300]!,
+      period: Duration(seconds: 1),
+      child: Container(
+        width: width,
+        height: height,
+        decoration: ShapeDecoration(
+          color: Colors.grey[400],
+          shape: shapeBorder
+        ),
+        
+      ),
+    );
+  }
+}
+
+class AudioThumbnailPlaceholder extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold();
   }
 }

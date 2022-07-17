@@ -1,14 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:langapp/helpers/customwidgets.dart';
 
 class LearnPage extends StatelessWidget{
-  final String title;
   final Color color;
   final int number;
 
   const LearnPage({
     Key? key,
-    required this.title,
     required this.color,
     this.number = 1,
   }) : super(key: key);
@@ -17,7 +16,7 @@ class LearnPage extends StatelessWidget{
   Widget build(BuildContext context) => CupertinoPageScaffold(
     backgroundColor: color,
     navigationBar: CupertinoNavigationBar(
-      middle: Text(title),
+      middle: Text('category-test'.tr()),
       trailing: Icon(CupertinoIcons.globe),
     ),
     child: SafeArea(

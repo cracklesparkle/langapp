@@ -1,21 +1,29 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:langapp/helpers/customwidgets.dart';
+import 'package:langapp/pages/audiolistpage.dart';
+import 'package:langapp/pages/learnpage.dart';
+import 'package:langapp/pages/videolistpage.dart';
+
+import '../helpers/appcolors.dart';
 
 class SubjectPage extends StatelessWidget{
   final String title;
   final Color color;
   final int number;
+  final int language;
 
   const SubjectPage({
     Key? key,
     required this.title,
     required this.color,
     this.number = 1,
+    required this.language,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => CupertinoPageScaffold(
-    backgroundColor: color,
+    //backgroundColor: color,
     navigationBar: CupertinoNavigationBar(
       middle: Text(title),
       trailing: Icon(CupertinoIcons.globe),
@@ -23,29 +31,48 @@ class SubjectPage extends StatelessWidget{
     child: SafeArea(
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '$title on $number',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold
-              )
+            Expanded(
+              child: GridView.count(
+                      crossAxisCount: 2,
+                      children: [
+                        ImageCard(
+                          title: 'category-audio'.tr(), 
+                          color: CupertinoColors.systemGrey5,
+                          iconData: CupertinoIcons.headphones,
+                          onPressedFunction: (){
+                            Navigator.of(context, rootNavigator: true).push(
+                              CupertinoPageRoute(
+                                builder: (context) => AudioListPage()
+                            ));
+                          }
+                        ),
+                        ImageCard(
+                          title: 'category-video'.tr(), 
+                          color: CupertinoColors.systemGrey5, 
+                          iconData: CupertinoIcons.film,
+                          onPressedFunction: (){
+                            Navigator.of(context, rootNavigator: true).push(
+                              CupertinoPageRoute(
+                                  builder: (context) => VideoListPage()
+                                )
+                            );
+                          }
+                        ),
+                        ImageCard(title: 'category-test'.tr(), 
+                          color: CupertinoColors.systemGrey5, 
+                          iconData: CupertinoIcons.list_bullet_below_rectangle,
+                          onPressedFunction: (){
+                            Navigator.of(context, rootNavigator: true).push(
+                              CupertinoPageRoute(
+                                  builder: (context) => LearnPage(color: color)
+                                )
+                            );
+                          }
+                        )
+                      ],
+                    ),
             ),
-            const SizedBox(height: 32),
-            CButton(
-              text: title, 
-              color: color, 
-              onPressedfunction: () => Navigator.of(context, rootNavigator: true).push(
-                CupertinoPageRoute(
-                  builder: (context) => SubjectPage(
-                      title: title, 
-                      color: color,
-                      number: number + 1,
-                    )
-                  )
-                )
-              )
           ]
         ),
       )

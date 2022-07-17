@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:langapp/pages/learnpage.dart';
+import 'package:langapp/pages/librarypage.dart';
 import 'package:langapp/pages/mappage.dart';
 import 'package:langapp/pages/newpage.dart';
 import 'package:langapp/pages/settingspage.dart';
@@ -18,9 +19,9 @@ class MainPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) => CupertinoTabScaffold(
     tabBar: CupertinoTabBar(
-      backgroundColor: CupertinoColors.lightBackgroundGray,
-      activeColor: CupertinoColors.activeBlue,
-      inactiveColor: CupertinoColors.inactiveGray,
+      //backgroundColor: CupertinoColors.lightBackgroundGray,
+      //activeColor: CupertinoColors.activeBlue,
+      //inactiveColor: CupertinoColors.inactiveGray,
       height: 60,
       onTap: (index){
         print('Clicked Tab $index');
@@ -56,7 +57,7 @@ class MainPage extends StatelessWidget{
           );
         case 1:
           return CupertinoTabView(
-            builder: (context) => LearnPage(title: 'Test', color: Colors.red)
+            builder: (context) => LibraryPage(title: 'Библиотека', color: Colors.white, language: language)
           );
         case 2:
           return CupertinoTabView(

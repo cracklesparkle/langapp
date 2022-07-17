@@ -35,6 +35,7 @@ class _MapPageState extends State<MapPage>{
                               title: 'map-item-1-title'.tr(), 
                               color: AppColors.FAMILY,
                               number: 0 + 1,
+                              language: 1,
                             )
                           )
                       );
