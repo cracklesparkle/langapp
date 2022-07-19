@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:langapp/helpers/customwidgets.dart';
 import 'package:langapp/pages/audiolistpage.dart';
 import 'package:langapp/pages/learnpage.dart';
@@ -66,6 +67,21 @@ class SubjectPage extends StatelessWidget{
                             Navigator.of(context, rootNavigator: true).push(
                               CupertinoPageRoute(
                                   builder: (context) => LearnPage(color: color)
+                                )
+                            );
+                          }
+                        ),
+                        ImageCard(title: 'category-test'.tr(), 
+                          color: CupertinoColors.systemGrey5, 
+                          iconData: CupertinoIcons.list_bullet_below_rectangle,
+                          onPressedFunction: (){
+                            Navigator.of(context, rootNavigator: true).push(
+                              CupertinoPageRoute(
+                                  builder: (context){
+                                    return Scaffold(
+                                      body: Center(child: WordCardWidget(color: CupertinoColors.systemGrey3, definition: 'whatever', splitWords: ['as', 'sd', 'as'], type: 'asdz', example: 'asdasg',))
+                                    );
+                                  } 
                                 )
                             );
                           }

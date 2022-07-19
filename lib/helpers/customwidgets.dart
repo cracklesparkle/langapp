@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:langapp/models/quiz/model.dart';
+import 'package:http/http.dart';
+import 'package:langapp/models/quiz/quiz.dart';
 import 'package:langapp/pages/mainpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -316,15 +318,42 @@ class QuestionWidget extends StatefulWidget{
 }
 
 class _QuestionWidgetState extends State<QuestionWidget>{
+  bool isLoading = false;
+
+  static Future<List<Question>> getQuestions() async{
+    const url = 'http://45.67.35.180/json/lang1/cat1/questions.json';
+    final response = await get(Uri.parse(url));
+    final body = jsonDecode(utf8.decode(response.bodyBytes));
+    return body.map<Question>(Question.fromJson).toList();
+  }
+
   late PageController _controller;
   int _questionNumber = 1;
   int _score = 0;
   bool _isLocked = false;
 
+  List<Question> questions = [];
+
+  Future loadData() async{
+
+    setState(() {
+      isLoading = true;
+    });
+
+    //await Future.delayed(Duration(seconds: 2), (){});
+    questions = await getQuestions();
+    //audios = List.of(allAudios);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+
   @override
   void initState(){
     super.initState();
     _controller = PageController(initialPage: 0);
+    loadData();
   }
 
   @override
@@ -339,12 +368,16 @@ class _QuestionWidgetState extends State<QuestionWidget>{
           const Divider(thickness: 1, color: Colors.grey),
           Expanded(
             child: PageView.builder(
-              itemCount: questions.length,
+              itemCount: isLoading ? 5 : questions.length,
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index){
-                final _question = questions[index];
-                return buildQuestion(_question);
+                if (isLoading){
+                    return CupertinoActivityIndicator();
+                } else{
+                  final _question = questions[index];
+                  return buildQuestion(_question);
+                }
               },
             )
           ),
