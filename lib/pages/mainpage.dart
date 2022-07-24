@@ -7,24 +7,41 @@ import 'package:langapp/pages/mappage.dart';
 import 'package:langapp/pages/newpage.dart';
 import 'package:langapp/pages/settingspage.dart';
 import 'package:langapp/pages/videolistpage.dart';
+import 'package:langapp/services/preferencesservice.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatelessWidget{
-  final int language;
+  int language;
 
-  const MainPage({
+  MainPage({
     Key? key,
     required this.language,
   }) : super(key: key);
 
+  Future loadPrefs() async{
+    final prefs = await SharedPreferences.getInstance();
+    language = await prefs.getInt('lang')!;
+    
+    // setState(() {
+    //   isLoading = false;
+    // });
+  }
+
   @override
-  Widget build(BuildContext context) => CupertinoTabScaffold(
+  Widget build(BuildContext context) {
+    PreferencesService prefService = Provider.of<PreferencesService>(context, listen: true);
+    prefService.loadPrefs();
+    return Consumer<PreferencesService>(
+      builder: (context, prefs, child){
+        return CupertinoTabScaffold(
     tabBar: CupertinoTabBar(
       //backgroundColor: CupertinoColors.lightBackgroundGray,
       //activeColor: CupertinoColors.activeBlue,
       //inactiveColor: CupertinoColors.inactiveGray,
       height: 60,
       onTap: (index){
-        print('Clicked Tab $index');
+        
       },
       items: [
         BottomNavigationBarItem(
@@ -57,7 +74,7 @@ class MainPage extends StatelessWidget{
           );
         case 1:
           return CupertinoTabView(
-            builder: (context) => LibraryPage(title: 'Библиотека', color: Colors.white, language: language)
+            builder: (context) => LibraryPage(color: Colors.white, language: prefs.langToLearn)
           );
         case 2:
           return CupertinoTabView(
@@ -72,4 +89,7 @@ class MainPage extends StatelessWidget{
       }
     },
   );
+      },
+    );
+  }
 }

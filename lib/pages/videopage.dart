@@ -65,7 +65,7 @@ class _VideoPageState extends State<VideoPage>{
       builder: (context, player){
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-            middle: Text('bottom-navbar-item-1'.tr()),
+            middle: Text(widget.title),
             trailing: TopNavBarButton()
           ),
           child: SafeArea(

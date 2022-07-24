@@ -1,0 +1,38 @@
+[
+	{
+		"title": "Введение.", 
+		"description": "Описание видео", 
+		"url": "https://www.youtube.com/watch?v=SM7A9D5DrA8", 
+		"thumbnailUrl": "https://img.youtube.com/vi/SM7A9D5DrA8/0.jpg"
+	},
+	{
+		"title": "Введение.", 
+		"description": "Описание видео", 
+		"url": "https://www.youtube.com/watch?v=omQY_QhMm40", 
+		"thumbnailUrl": "https://img.youtube.com/vi/omQY_QhMm40/0.jpg"
+	},
+	{
+		"title": "Введение.", 
+		"description": "Описание видео", 
+		"url": "https://www.youtube.com/watch?v=0VRYb2JU4MM", 
+		"thumbnailUrl": "https://img.youtube.com/vi/0VRYb2JU4MM/0.jpg"
+	},
+	{
+		"title": "Введение.", 
+		"description": "Описание видео", 
+		"url": "https://www.youtube.com/watch?v=U551XwVfamE", 
+		"thumbnailUrl": "https://img.youtube.com/vi/U551XwVfamE/0.jpg"
+	},
+	{
+		"title": "Введение.", 
+		"description": "Описание видео", 
+		"url": "https://www.youtube.com/watch?v=szYJHH-vY7k", 
+		"thumbnailUrl": "https://img.youtube.com/vi/szYJHH-vY7k/0.jpg"
+	},
+	{
+		"title": "Введение.", 
+		"description": "Описание видео", 
+		"url": "https://www.youtube.com/watch?v=hHhCgBbjsmA", 
+		"thumbnailUrl": "https://img.youtube.com/vi/hHhCgBbjsmA/0.jpg"
+	}
+]

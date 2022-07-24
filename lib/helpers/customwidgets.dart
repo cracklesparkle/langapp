@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:langapp/models/quiz/quiz.dart';
 import 'package:langapp/pages/mainpage.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../services/preferencesservice.dart';
 
 class MButton extends StatelessWidget{
   const MButton({
@@ -81,12 +84,14 @@ class CButton extends StatelessWidget{
 
 //Button for language select on top navigation bar
 class TopNavBarButton extends StatelessWidget{
+
   void setLang(int lang) async{
     final prefs = await SharedPreferences.getInstance();
     //set language
     await prefs.setInt('lang', lang);
   }
   void _showActionSheet(BuildContext context) {
+    PreferencesService prefService = Provider.of<PreferencesService>(context, listen: false);
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
@@ -96,49 +101,61 @@ class TopNavBarButton extends StatelessWidget{
           CupertinoActionSheetAction(
             onPressed: () {
               //Navigator.pop(context);
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => MainPage(language: 1)
-                  )
-                );
+              // Navigator.pushReplacement(
+              //   context,
+              //   CupertinoPageRoute(
+              //     builder: (context) {
+              //       return MainPage(language: 1);
+              //     }
+              //     )
+              //   );
+              Navigator.pop(context);
+              prefService.changeLangToLearn(1);
               setLang(1);
             },
             child: Text('lang1-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => MainPage(language: 2)
-                  )
-                );
+              // Navigator.pushReplacement(
+              //   context,
+              //   CupertinoPageRoute(
+              //     builder: (context) {
+              //       return MainPage(language: 2);
+              //     }
+              //     )
+              //   );
+              Navigator.pop(context);
               setLang(2);
+              prefService.changeLangToLearn(2);
             },
             child: Text('lang2-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => MainPage(language: 3)
-                  )
-                );
+              // Navigator.pushReplacement(
+              //   context,
+              //   CupertinoPageRoute(
+              //     builder: (context) => MainPage(language: 3)
+              //     )
+              //   );
+              Navigator.pop(context);
               setLang(3);
+              prefService.changeLangToLearn(3);
             },
             child: Text('lang3-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => MainPage(language: 4)
-                  )
-                );
+              // Navigator.pushReplacement(
+              //   context,
+              //   CupertinoPageRoute(
+              //     builder: (context) => MainPage(language: 4)
+              //     )
+              //   );
+              Navigator.pop(context);
               setLang(4);
+              prefService.changeLangToLearn(4);
             },
             child: Text('lang4-name'.tr()),
           )
@@ -149,6 +166,7 @@ class TopNavBarButton extends StatelessWidget{
   
   @override
   Widget build(BuildContext context){
+    
     return CupertinoButton(
             padding: EdgeInsets.all(0),
             child: Icon(CupertinoIcons.globe),

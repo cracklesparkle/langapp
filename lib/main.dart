@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:langapp/pages/mainpage.dart';
 import 'package:langapp/pages/welcomepage.dart';
+import 'package:langapp/services/preferencesservice.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -15,14 +17,21 @@ void main() async {
   final firstLaunch = prefs.getBool('firstLaunch') ?? true;
   final lang = prefs.getInt('lang') ?? 0;
   runApp(
-    EasyLocalization(
-      supportedLocales: [
-        Locale('en', 'US'), 
-        Locale('ru', 'RU')
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => PreferencesService()
+        )
       ],
-      path: 'assets/translations', // <-- change the path of the translation files 
-      fallbackLocale: Locale('ru', 'RU'),
-      child: MainApp(firstLaunch: firstLaunch, lang: lang,)
+      child: EasyLocalization(
+        supportedLocales: [
+          Locale('en', 'US'), 
+          Locale('ru', 'RU')
+        ],
+        path: 'assets/translations', // <-- change the path of the translation files 
+        fallbackLocale: Locale('ru', 'RU'),
+        child: MainApp(firstLaunch: firstLaunch, lang: lang,)
+      ),
     )
   );
 }

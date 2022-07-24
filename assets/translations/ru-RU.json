@@ -5,6 +5,8 @@
     "welcome-page-button-choose-language": "Выбрать язык",
     "welcome-page-button-choose-language-popup-title": "Выберите язык для изучения",
     "welcome-page-button-choose-language-popup-descr": "Также Вы cможете изменить этот выбор позже в Настройках",
+    "settings-page-currentlang": "Текущий язык: ",
+    "settings-page-langtolearn": "Язык для изучения",
     "lang1-name": "Якутский язык",
     "lang2-name": "Эвенкийский язык",
     "lang3-name": "Эвенский язык",

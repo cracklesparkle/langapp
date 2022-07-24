@@ -103,7 +103,12 @@ class _AudioListPageState extends State<AudioListPage>{
         onTap: (){
                 Navigator.of(context, rootNavigator: true).push(
                   CupertinoPageRoute(
-                    builder: (context) => AudioPage(url: audio.url, thumbnailUrl: audio.thumbnailUrl, title: audio.title, subtitle: audio.subtitle, description: audio.description,)
+                    builder: (context) => AudioPage(
+                      url: audio.url, 
+                      thumbnailUrl: audio.thumbnailUrl, 
+                      title: audio.title, 
+                      subtitle: audio.subtitle, 
+                      description: audio.description,)
                     ),
                 );
               },

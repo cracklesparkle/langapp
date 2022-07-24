@@ -86,7 +86,7 @@ class _AudioPageState extends State<AudioPage>{
     final PageController controller = PageController();
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('bottom-navbar-item-1'.tr()),
+        middle: Text(widget.title),
         trailing: TopNavBarButton()
       ),
       child: SafeArea(

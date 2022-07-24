@@ -5,6 +5,8 @@ import 'package:langapp/helpers/appcolors.dart';
 import 'package:langapp/helpers/customwidgets.dart';
 import 'package:langapp/pages/newpage.dart';
 import 'package:langapp/pages/subjectpage.dart';
+import 'package:langapp/services/preferencesservice.dart';
+import 'package:provider/provider.dart';
 
 class MapPage extends StatefulWidget{
   @override
@@ -14,9 +16,11 @@ class MapPage extends StatefulWidget{
 class _MapPageState extends State<MapPage>{
   @override
   Widget build(BuildContext context) {
+    PreferencesService prefService = Provider.of<PreferencesService>(context, listen: true);
+    
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('bottom-navbar-item-1'.tr()),
+        middle: Text('bottom-navbar-item-1'.tr() + prefService.langToLearn.toString()),
         trailing: TopNavBarButton()
       ),
       child: SafeArea(
