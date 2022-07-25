@@ -56,7 +56,7 @@ class _VideoListPageState extends State<VideoListPage>{
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('category-video'.tr()),
-        trailing: TopNavBarButton()
+        //trailing: TopNavBarButton()
       ),
       child: SafeArea(
         child: Column(

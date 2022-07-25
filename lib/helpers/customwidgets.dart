@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:langapp/models/quiz/quiz.dart';
+import 'package:langapp/models/quiz.dart';
 import 'package:langapp/pages/mainpage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -110,10 +110,10 @@ class TopNavBarButton extends StatelessWidget{
               //     )
               //   );
               Navigator.pop(context);
-              prefService.changeLangToLearn(1);
-              setLang(1);
+              prefService.changeLangToLearn(0);
+              setLang(0);
             },
-            child: Text('lang1-name'.tr()),
+            child: Text('lang0-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
@@ -123,6 +123,20 @@ class TopNavBarButton extends StatelessWidget{
               //     builder: (context) {
               //       return MainPage(language: 2);
               //     }
+              //     )
+              //   );
+              Navigator.pop(context);
+              setLang(1);
+              prefService.changeLangToLearn(1);
+            },
+            child: Text('lang1-name'.tr()),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              // Navigator.pushReplacement(
+              //   context,
+              //   CupertinoPageRoute(
+              //     builder: (context) => MainPage(language: 3)
               //     )
               //   );
               Navigator.pop(context);
@@ -136,7 +150,7 @@ class TopNavBarButton extends StatelessWidget{
               // Navigator.pushReplacement(
               //   context,
               //   CupertinoPageRoute(
-              //     builder: (context) => MainPage(language: 3)
+              //     builder: (context) => MainPage(language: 4)
               //     )
               //   );
               Navigator.pop(context);
@@ -144,20 +158,6 @@ class TopNavBarButton extends StatelessWidget{
               prefService.changeLangToLearn(3);
             },
             child: Text('lang3-name'.tr()),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              // Navigator.pushReplacement(
-              //   context,
-              //   CupertinoPageRoute(
-              //     builder: (context) => MainPage(language: 4)
-              //     )
-              //   );
-              Navigator.pop(context);
-              setLang(4);
-              prefService.changeLangToLearn(4);
-            },
-            child: Text('lang4-name'.tr()),
           )
         ],
       ),
@@ -454,7 +454,7 @@ class _QuestionWidgetState extends State<QuestionWidget>{
         } else {
           Navigator.pushReplacement(
             context, 
-            MaterialPageRoute(builder: (context) => ResultPage(score: _score),
+            MaterialPageRoute(builder: (context) => ResultPage(score: _score, questions: questions,),
             )
           );
         }
@@ -540,9 +540,10 @@ class OptionsWidget extends StatelessWidget{
 }
 
 class ResultPage extends StatelessWidget{
-  const ResultPage({Key? key, required this.score}) : super(key: key);
+  const ResultPage({Key? key, required this.score, required this.questions}) : super(key: key);
 
   final int score;
+  final List<Question> questions;
 
   @override
   Widget build(BuildContext context){

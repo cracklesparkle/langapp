@@ -31,12 +31,24 @@ class WelcomePage extends StatelessWidget{
               Navigator.push(
                 context,
                 CupertinoPageRoute(
+                  builder: (context) => MainPage(language: 0)
+                  )
+                );
+              firstLaunchBehavior(0);
+            },
+            child: Text('lang1-name'.tr()),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
                   builder: (context) => MainPage(language: 1)
                   )
                 );
               firstLaunchBehavior(1);
             },
-            child: Text('lang1-name'.tr()),
+            child: Text('lang2-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
@@ -61,18 +73,6 @@ class WelcomePage extends StatelessWidget{
               firstLaunchBehavior(3);
             },
             child: Text('lang3-name'.tr()),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => MainPage(language: 4)
-                  )
-                );
-              firstLaunchBehavior(4);
-            },
-            child: Text('lang4-name'.tr()),
           )
         ],
       ),

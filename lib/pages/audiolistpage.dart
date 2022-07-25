@@ -9,6 +9,7 @@ import 'package:langapp/data/audios.dart';
 import 'package:langapp/data/videos.dart';
 import 'package:langapp/helpers/appcolors.dart';
 import 'package:langapp/helpers/customwidgets.dart';
+import 'package:langapp/models/subjectmodel.dart';
 import 'package:langapp/models/videoitem.dart';
 import 'package:langapp/pages/audiopage.dart';
 import 'package:langapp/pages/newpage.dart';
@@ -18,14 +19,20 @@ import 'package:langapp/pages/videopage.dart';
 import '../models/audioitem.dart';
 
 class AudioListPage extends StatefulWidget{
+  final String url;
+
+  const AudioListPage({
+    Key? key,
+    required this.url
+  }) : super(key: key);
+
   @override
   _AudioListPageState createState() => _AudioListPageState();
 }
 
 class _AudioListPageState extends State<AudioListPage>{
-  static Future<List<AudioItem>> getAudios() async{
-    const url = 'http://45.67.35.180/json/lang1/cat1/audios.json';
-    final response = await get(Uri.parse(url));
+  Future<List<AudioItem>> getAudios() async{
+    final response = await get(Uri.parse(widget.url));
     final body = jsonDecode(utf8.decode(response.bodyBytes));
     return body.map<AudioItem>(AudioItem.fromJson).toList();
   }
@@ -59,7 +66,7 @@ class _AudioListPageState extends State<AudioListPage>{
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('category-audio'.tr()),
-        trailing: TopNavBarButton()
+        //trailing: TopNavBarButton()
       ),
       child: SafeArea(
         child: Column(

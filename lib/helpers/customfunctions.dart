@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 String formatTime(Duration duration){
   String twoDigits(int n) => n.toString().padLeft(2, '0');
   final hours = twoDigits(duration.inHours);
@@ -9,4 +11,8 @@ String formatTime(Duration duration){
     minutes,
     seconds,
   ].join(':');
+}
+
+Color hexToColor(String hexString, {String alphaChannel = 'FF'}) {
+  return Color(int.parse(hexString.replaceFirst('#', '0x$alphaChannel')));
 }

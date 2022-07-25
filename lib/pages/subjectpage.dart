@@ -1,92 +1,66 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:langapp/helpers/customwidgets.dart';
+import 'package:langapp/models/subjectmodel.dart';
 import 'package:langapp/pages/audiolistpage.dart';
 import 'package:langapp/pages/learnpage.dart';
 import 'package:langapp/pages/videolistpage.dart';
+import 'package:langapp/services/preferencesservice.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/appcolors.dart';
 
-class SubjectPage extends StatelessWidget{
+class SubjectPage extends StatefulWidget{
   final String title;
   final Color color;
-  final int number;
   final int language;
+  final List<SubjectOption> options;
 
   const SubjectPage({
     Key? key,
     required this.title,
     required this.color,
-    this.number = 1,
     required this.language,
+    required this.options,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => CupertinoPageScaffold(
+  State<SubjectPage> createState() => _SubjectPageState();
+}
+
+class _SubjectPageState extends State<SubjectPage> {
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
     //backgroundColor: color,
     navigationBar: CupertinoNavigationBar(
-      middle: Text(title),
-      trailing: TopNavBarButton(),
+      middle: Text(widget.title),
+      //trailing: TopNavBarButton(),
     ),
     child: SafeArea(
       child: Center(
         child: Column(
           children: [
             Expanded(
-              child: GridView.count(
-                      crossAxisCount: 2,
-                      children: [
-                        ImageCard(
-                          title: 'category-audio'.tr(), 
-                          color: CupertinoColors.systemGrey5,
-                          iconData: CupertinoIcons.headphones,
-                          onPressedFunction: (){
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                builder: (context) => AudioListPage()
-                            ));
-                          }
-                        ),
-                        ImageCard(
-                          title: 'category-video'.tr(), 
-                          color: CupertinoColors.systemGrey5, 
-                          iconData: CupertinoIcons.film,
-                          onPressedFunction: (){
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                  builder: (context) => VideoListPage()
-                                )
-                            );
-                          }
-                        ),
-                        ImageCard(title: 'category-test'.tr(), 
-                          color: CupertinoColors.systemGrey5, 
-                          iconData: CupertinoIcons.list_bullet_below_rectangle,
-                          onPressedFunction: (){
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                  builder: (context) => LearnPage(color: color)
-                                )
-                            );
-                          }
-                        ),
-                        ImageCard(title: 'category-test'.tr(), 
-                          color: CupertinoColors.systemGrey5, 
-                          iconData: CupertinoIcons.list_bullet_below_rectangle,
-                          onPressedFunction: (){
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                  builder: (context){
-                                    return Scaffold(
-                                      body: Center(child: WordCardWidget(color: CupertinoColors.systemGrey3, definition: 'whatever', splitWords: ['as', 'sd', 'as'], type: 'asdz', example: 'asdasg',))
-                                    );
-                                  } 
-                                )
-                            );
-                          }
-                        )
-                      ],
+              child: GridView.builder(
+                      itemCount: widget.options.length,
+                      itemBuilder: (context, index){
+                        final _subjectOption = widget.options[index];
+                        //return CupertinoActivityIndicator();
+                        return buildOption(_subjectOption);
+                      }, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
                     ),
             ),
           ]
@@ -94,4 +68,50 @@ class SubjectPage extends StatelessWidget{
       )
     ),
   );
+  }
+
+  ImageCard buildOption(SubjectOption subjectOption){
+    PreferencesService prefService = Provider.of<PreferencesService>(context, listen: true);
+    IconData icon;
+    switch(subjectOption.type){
+      case "audio":
+        icon = CupertinoIcons.headphones;
+      break;
+      case "video":
+        icon = CupertinoIcons.film;
+      break;
+      case "quiz":
+        icon = CupertinoIcons.list_bullet_below_rectangle;
+      break;
+      default:{
+        icon = CupertinoIcons.nosign;
+      }
+    }
+    return ImageCard(
+                          title: subjectOption.title, 
+                          color: CupertinoColors.systemGrey5,
+                          iconData: icon,
+                          onPressedFunction: (){
+                            Navigator.of(context, rootNavigator: true).push(
+                              CupertinoPageRoute(
+                                builder: (context) {
+                                  switch(subjectOption.type){
+                                    case "audio":
+                                      return AudioListPage(url: prefService.langs[prefService.langToLearn].url + subjectOption.url);
+                                    
+                                    case "video":
+                                      return VideoListPage();
+                                    
+                                    case "quiz":
+                                      return LearnPage();
+                                    //if type not set for a subject
+                                    default:{
+                                      return AudioListPage(url: prefService.langs[prefService.langToLearn].url + subjectOption.url);
+                                    }
+                                  }
+                                }
+                            ));
+                          }
+                        );
+  }
 }

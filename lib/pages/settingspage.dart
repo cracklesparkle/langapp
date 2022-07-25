@@ -81,6 +81,14 @@ class _LangSelectState extends State<LangSelect>{
           CupertinoActionSheetAction(
             onPressed: () {
               Navigator.pop(context);
+              setLang(0);
+              prefService.changeLangToLearn(0);
+            },
+            child: Text('lang0-name'.tr()),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context);
               setLang(1);
               prefService.changeLangToLearn(1);
             },
@@ -101,14 +109,6 @@ class _LangSelectState extends State<LangSelect>{
               prefService.changeLangToLearn(3);
             },
             child: Text('lang3-name'.tr()),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context);
-              setLang(4);
-              prefService.changeLangToLearn(4);
-            },
-            child: Text('lang4-name'.tr()),
           )
         ],
       ),
@@ -124,7 +124,7 @@ class _LangSelectState extends State<LangSelect>{
                 onTap: (){
                   _showActionSheet(context);
                 },
-                title: Text('settings-page-langtolearn'),
+                title: Text('settings-page-langtolearn'.tr()),
                 subtitle: Text(
                   'settings-page-currentlang'.tr() + 'lang${prefs.langToLearn}-name'.tr()
                 ),

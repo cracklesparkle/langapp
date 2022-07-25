@@ -1,0 +1,134 @@
+[
+    {
+        "title": "Моя семья",
+        "imageAsset": "assets/images/mapPage/myFamily.png",
+        "color": "#f9df86",
+        "options": [
+            {
+                "title": "Аудио",
+                "type": "audio",
+                "url": "cat1/audios.json"
+            },
+            {
+                "title": "Видео",
+                "type": "video",
+                "url": "cat1/videos.json"
+            },
+            {
+                "title": "Тест",
+                "type": "quiz",
+                "url": "cat1/questions.json"
+            }
+        ]
+    },
+    {
+        "title": "Мой дом",
+        "imageAsset": "assets/images/mapPage/myHouse.png",
+        "color": "#85c4ff",
+        "options": [
+            {
+                "title": "Аудио",
+                "type": "audio",
+                "url": "cat2/audios.json"
+            },
+            {
+                "title": "Видео",
+                "type": "video",
+                "url": "cat2/videos.json"
+            },
+            {
+                "title": "Тест",
+                "type": "quiz",
+                "url": "cat2/questions.json"
+            }
+        ]
+    },
+    {
+        "title": "Природа",
+        "imageAsset": "assets/images/mapPage/nature.png",
+        "color": "#d1d1d1",
+        "options": [
+            {
+                "title": "Аудио",
+                "type": "audio",
+                "url": "cat3/audios.json"
+            },
+            {
+                "title": "Видео",
+                "type": "video",
+                "url": "cat3/videos.json"
+            },
+            {
+                "title": "Тест",
+                "type": "quiz",
+                "url": "cat3/questions.json"
+            }
+        ]
+    },
+    {
+        "title": "Животные",
+        "imageAsset": "assets/images/mapPage/animals.png",
+        "color": "#d1d1d1",
+        "options": [
+            {
+                "title": "Аудио",
+                "type": "audio",
+                "url": "cat4/audios.json"
+            },
+            {
+                "title": "Видео",
+                "type": "video",
+                "url": "cat4/videos.json"
+            },
+            {
+                "title": "Тест",
+                "type": "quiz",
+                "url": "cat4/questions.json"
+            }
+        ]
+    },
+    {
+        "title": "Национальная культура",
+        "imageAsset": "assets/images/mapPage/culture.png",
+        "color": "#a1b5c8",
+        "options": [
+            {
+                "title": "Аудио",
+                "type": "audio",
+                "url": "cat5/audios.json"
+            },
+            {
+                "title": "Видео",
+                "type": "video",
+                "url": "cat5/videos.json"
+            },
+            {
+                "title": "Тест",
+                "type": "quiz",
+                "url": "cat5/questions.json"
+            }
+        ]
+    },
+    {
+        "title": "Кухня",
+        "imageAsset": "assets/images/mapPage/nationalFood.png",
+        "color": "#cd846d",
+        "options": [
+            {
+                "title": "Аудио",
+                "type": "audio",
+                "url": "cat6/audios.json"
+            },
+            {
+                "title": "Видео",
+                "type": "video",
+                "url": "cat6/videos.json"
+            },
+            {
+                "title": "Тест",
+                "type": "quiz",
+                "url": "cat6/questions.json"
+            }
+        ]
+    }
+]

@@ -39,40 +39,6 @@ class LibraryPage extends StatelessWidget{
               child: GridView.count(
                       crossAxisCount: 2,
                       children: [
-                        ImageCard(
-                          title: 'Аудио', 
-                          color: color, 
-                          imageAsset: 'assets/images/mapPage/animals.png', 
-                          onPressedFunction: (){
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                builder: (context) => AudioListPage()
-                            ));
-                          }
-                        ),
-                        ImageCard(
-                          title: 'Видео', 
-                          color: color, 
-                          imageAsset: 'assets/images/mapPage/animals.png', 
-                          onPressedFunction: (){
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                  builder: (context) => VideoListPage()
-                                )
-                            );
-                          }
-                        ),
-                        ImageCard(title: 'Тест', 
-                          color: color, 
-                          imageAsset: 'assets/images/mapPage/animals.png', 
-                          onPressedFunction: (){
-                            Navigator.of(context, rootNavigator: true).push(
-                              CupertinoPageRoute(
-                                  builder: (context) => LearnPage(color: color)
-                                )
-                            );
-                          }
-                        )
                       ],
                     ),
             ),
