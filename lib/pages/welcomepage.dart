@@ -36,7 +36,7 @@ class WelcomePage extends StatelessWidget{
                 );
               firstLaunchBehavior(0);
             },
-            child: Text('lang1-name'.tr()),
+            child: Text('lang0-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
@@ -48,7 +48,7 @@ class WelcomePage extends StatelessWidget{
                 );
               firstLaunchBehavior(1);
             },
-            child: Text('lang2-name'.tr()),
+            child: Text('lang1-name'.tr()),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
