@@ -1,5 +1,6 @@
 class Question{
   final String text;
+  final String type;
   final List<Option> options;
   bool isLocked;
   Option? selectedOption;
@@ -7,6 +8,7 @@ class Question{
   Question(
     {
       required this.text,
+      required this.type,
       required this.options,
       this.isLocked = false,
       this.selectedOption,
@@ -17,7 +19,8 @@ class Question{
     final optionsData = json['options'] as List<dynamic>;
     final options = optionsData != null ? optionsData.map((optionData) => Option.fromJson(optionData)).toList() : <Option>[];
     return Question(
-      text: json['text'], 
+      text: json['text'],
+      type: json['type'], 
       options: options
     );
   }

@@ -176,14 +176,16 @@ class TopNavBarButton extends StatelessWidget{
 }
 
 class WordWidget extends StatelessWidget{
-  final List<String> splitWords;
+  //final List<String> splitWords;
+  final String word;
   final String type;
   final String definition;
   final String example;
 
   const WordWidget({
     Key? key,
-    required this.splitWords,
+    //required this.splitWords,
+    required this.word,
     required this.type,
     required this.definition,
     required this.example,
@@ -193,71 +195,57 @@ class WordWidget extends StatelessWidget{
   Widget build(BuildContext context){
     final bullet = " \u2022 ";
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Word of the Day',
-          style: TextStyle(fontSize: 22, color: Colors.white54),),
-        const SizedBox(height: 12),
-        Text(
-          splitWords.join(bullet),
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1,),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          type,
-          style: TextStyle(fontSize: 20, color: Colors.white54),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          definition,
-          style: TextStyle(fontSize: 20, color: Colors.white),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          example,
-          style: TextStyle(fontSize: 20, color: Colors.white70),
-        ),
-      ],
-    );
-  }
-}
-
-class WordCardWidget extends StatelessWidget{
-  final List<String> splitWords;
-  final String type;
-  final String definition;
-  final String example;
-  final Color color;
-
-  const WordCardWidget({
-    Key? key,
-    required this.splitWords,
-    required this.type,
-    required this.definition,
-    required this.example,
-    required this.color,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context){
-    
-    return Card(
-      shadowColor: CupertinoColors.inactiveGray,
-      elevation: 8,
-      color: color,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10, 150, 10, 180),
+      child: Card(
+        elevation: 5,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            WordWidget(splitWords: splitWords, type: type, definition: definition, example: example),
-            SizedBox(height: 12),
-            TextButton(onPressed: (){}, child: Text('Learn more'))
+            // Text(
+            //   'Word of the Day',
+            //   style: TextStyle(fontSize: 22, color: Colors.black54),),
+            // const SizedBox(height: 12),
+            // Text(
+            //   splitWords.join(bullet),
+            //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1,),
+            // ),
+            const SizedBox(height: 50),
+            Text(
+              word,
+              style: TextStyle(
+                fontSize: 24, 
+                fontWeight: FontWeight.w500, 
+                letterSpacing: -1,
+                color: Colors.blue
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              type,
+              style: TextStyle(fontSize: 20, color: Colors.black54),
+            ),
+            const SizedBox(height: 8),
+            Divider(
+              indent: 50,
+              endIndent: 50,
+              thickness: 1,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              definition,
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              example,
+              style: TextStyle(fontSize: 20, color: Colors.black87),
+            ),
+            const SizedBox(height: 50),
           ],
-        ))
-      );
+        ),
+      ),
+    );
   }
 }
 
@@ -384,8 +372,12 @@ class _QuestionWidgetState extends State<QuestionWidget>{
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const SizedBox(height: 32),
-          Text('$_questionNumber/${questions.length}'),
-          const Divider(thickness: 1, color: Colors.grey),
+          LinearProgressIndicator(
+            value: isLoading ? 0 : _questionNumber/questions.length,
+            backgroundColor: Colors.blue[50],
+          ),
+          //Text('$_questionNumber/${questions.length}'),
+          //const Divider(thickness: 1, color: Colors.grey),
           Expanded(
             child: PageView.builder(
               itemCount: isLoading ? 5 : questions.length,
@@ -396,11 +388,21 @@ class _QuestionWidgetState extends State<QuestionWidget>{
                     return CupertinoActivityIndicator();
                 } else{
                   final _question = questions[index];
-                  return buildQuestion(_question);
+                  if (_question.type == 'question'){
+                    return buildQuestion(_question);
+                  }else{
+                    return WordWidget(
+                      word: _question.text, 
+                      type: '', 
+                      definition: _question.options[0].text, 
+                      example: '',
+                    );
+                  }
                 }
               },
             )
           ),
+          !isLoading && questions[_questionNumber-1].type == 'info' ? buildElevatedButton() : const SizedBox.shrink(),
           _isLocked ? buildElevatedButton() : const SizedBox.shrink(),
           const SizedBox(height: 20),
         ]
@@ -443,6 +445,9 @@ class _QuestionWidgetState extends State<QuestionWidget>{
 
   ElevatedButton buildElevatedButton(){
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(shape: new RoundedRectangleBorder(
+               borderRadius: new BorderRadius.circular(30.0),
+               ),),
       onPressed: (){
         if(_questionNumber < questions.length){
           _controller.nextPage(
@@ -551,7 +556,7 @@ class ResultPage extends StatelessWidget{
     return Scaffold(
       body:
         Center(
-          child: Text('You got $score/${questions.length}')
+          child: Text('Количество правильных ответов: $score/${questions.length-1}')
         )
     );
   }

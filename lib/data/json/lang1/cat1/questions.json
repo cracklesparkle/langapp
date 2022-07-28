@@ -1,63 +1,76 @@
 [
     {
-        "text": "What is actually electricity?",
+        "text": "Ийэ",
+        "type": "info",
         "options": [
             {
-                "text": "A flow of water",
-                "isCorrect": false
-            },
-            {
-                "text": "A flow of air",
-                "isCorrect": false
-            },
-            {
-                "text": "A flow of electrons",
-                "isCorrect": true
-            },
-            {
-                "text": "A flow of atom",
+                "text": "мать || материнский",
                 "isCorrect": false
             }
         ]
     },
     {
-        "text": "What is actually electricity?",
+        "text": "Мать - ",
+        "type": "question",
         "options": [
             {
-                "text": "A flow of water",
+                "text": "Оҕо",
                 "isCorrect": false
             },
             {
-                "text": "A flow of air",
+                "text": "Убай",
                 "isCorrect": false
             },
             {
-                "text": "A flow of electrons",
+                "text": "Ийэ",
                 "isCorrect": true
             },
             {
-                "text": "A flow of atom",
+                "text": "Эбэ",
                 "isCorrect": false
             }
         ]
     },
     {
-        "text": "What is actually electricity?",
+        "text": "Мать - ",
+        "type": "question",
         "options": [
             {
-                "text": "A flow of water",
+                "text": "Оҕо",
                 "isCorrect": false
             },
             {
-                "text": "A flow of air",
+                "text": "Убай",
                 "isCorrect": false
             },
             {
-                "text": "A flow of electrons",
+                "text": "Ийэ",
                 "isCorrect": true
             },
             {
-                "text": "A flow of atom",
+                "text": "Эбэ",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "text": "Мать - ",
+        "type": "question",
+        "options": [
+            {
+                "text": "Оҕо",
+                "isCorrect": false
+            },
+            {
+                "text": "Убай",
+                "isCorrect": false
+            },
+            {
+                "text": "Ийэ",
+                "isCorrect": true
+            },
+            {
+                "text": "Эбэ",
                 "isCorrect": false
             }
         ]
