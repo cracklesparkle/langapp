@@ -56,23 +56,35 @@ class _MapPageState extends State<MapPage>{
     print(prefService.langs[0].title);
 
     return CupertinoPageScaffold(
+      backgroundColor: hexToColor('#73ac83'),
       navigationBar: CupertinoNavigationBar(
-        middle: Text('bottom-navbar-item-1'.tr() + prefService.langToLearn.toString()),
+        middle: Text('bottom-navbar-item-1'.tr()),
         trailing: TopNavBarButton()
       ),
       child: SafeArea(
-        child: CupertinoScrollbar(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(10),
-            itemCount: isLoading ? 1 : subjects.length,
-            itemBuilder: (context, index){
-              if (isLoading){
-                    return CupertinoActivityIndicator();
-                } else{
-                  final _subject = subjects[index];
-                  return buildSubject(_subject, index);
-                }
-            },
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Container(
+            decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/mapPage/river/river.png'),
+              repeat: ImageRepeat.repeatY
+              )
+            ),
+            height: isLoading ? 1 : subjects.length * 197,
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              itemCount: isLoading ? 1 : subjects.length,
+              itemBuilder: (context, index){
+                if (isLoading){
+                      return CupertinoActivityIndicator();
+                  } else{
+                    final _subject = subjects[index];
+                    return buildSubject(_subject, index);
+                  }
+              },
+            ),
           ),
         ),
       )
@@ -80,25 +92,49 @@ class _MapPageState extends State<MapPage>{
     
   }
 
-  Row buildSubject(Subject subject, index){
+  Widget buildSubject(Subject subject, index){
     PreferencesService prefService = Provider.of<PreferencesService>(context, listen: true);
     return Row(
-                mainAxisAlignment: index % 2 == 0 ? MainAxisAlignment.start : MainAxisAlignment.end,
-                children: [
-                  ImageCard(title: subject.title, color: hexToColor(subject.color), imageAsset: subject.imageAsset, 
-                    onPressedFunction: (){
-                      Navigator.of(context, rootNavigator: true).push(
-                        CupertinoPageRoute(
-                          builder: (context) => SubjectPage(
-                              title: subject.title, 
-                              color: hexToColor(subject.color),
-                              language: prefService.langToLearn,
-                              options: subject.options,
-                            )
-                          )
-                      );
-                    },
-                  ),
-              ]);
+      mainAxisAlignment: index % 2 == 0 ? MainAxisAlignment.start : MainAxisAlignment.end,
+      children: [
+        Stack(
+          children: [
+            ImageCard(title: subject.title, color: hexToColor(subject.color), imageAsset: subject.imageAsset, 
+              onPressedFunction: (){
+                Navigator.of(context, rootNavigator: true).push(
+                  CupertinoPageRoute(
+                    builder: (context) => SubjectPage(
+                        title: subject.title, 
+                        color: hexToColor(subject.color),
+                        language: prefService.langToLearn,
+                        options: subject.options,
+                      )
+                    )
+                );
+              },
+            ),
+            
+          ],
+        ), 
+    ]);
   }
 }
+
+class MapPainter extends CustomPainter{
+    @override
+    void paint(Canvas canvas, Size size){
+      final paint = Paint()
+      ..color = Colors.amber
+      ..strokeWidth = 10;
+      canvas.drawLine(
+        Offset(size.width * 1/6, size.height * 1/2),
+        Offset(size.width * 5/6, size.height * 0),
+        paint
+      );
+    }
+
+    @override
+    bool shouldRepaint(CustomPainter old){
+      return false;
+    }
+  }

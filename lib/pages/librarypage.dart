@@ -11,13 +11,11 @@ import '../helpers/appcolors.dart';
 
 class LibraryPage extends StatelessWidget{
   final Color color;
-  final int number;
   final int language;
 
   const LibraryPage({
     Key? key,
     required this.color,
-    this.number = 1,
     required this.language,
   }) : super(key: key);
 
@@ -28,7 +26,7 @@ class LibraryPage extends StatelessWidget{
     return CupertinoPageScaffold(
     backgroundColor: color,
     navigationBar: CupertinoNavigationBar(
-      middle: Text('bottom-navbar-item-2'.tr() + prefService.langToLearn.toString()),
+      middle: Text('bottom-navbar-item-2'.tr()),
       trailing: TopNavBarButton()
     ),
     child: SafeArea(

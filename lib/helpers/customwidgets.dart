@@ -327,8 +327,11 @@ class ImageCard extends StatelessWidget{
 }
 
 class QuestionWidget extends StatefulWidget{
+  final String url;
+
   const QuestionWidget({
     Key? key,
+    required this.url
   }) : super(key: key);
 
   @override
@@ -338,9 +341,8 @@ class QuestionWidget extends StatefulWidget{
 class _QuestionWidgetState extends State<QuestionWidget>{
   bool isLoading = false;
 
-  static Future<List<Question>> getQuestions() async{
-    const url = 'http://45.67.35.180/json/lang1/cat1/questions.json';
-    final response = await get(Uri.parse(url));
+  Future<List<Question>> getQuestions() async{
+    final response = await get(Uri.parse(widget.url));
     final body = jsonDecode(utf8.decode(response.bodyBytes));
     return body.map<Question>(Question.fromJson).toList();
   }
@@ -382,7 +384,7 @@ class _QuestionWidgetState extends State<QuestionWidget>{
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const SizedBox(height: 32),
-          Text('Question $_questionNumber/${questions.length}'),
+          Text('$_questionNumber/${questions.length}'),
           const Divider(thickness: 1, color: Colors.grey),
           Expanded(
             child: PageView.builder(
@@ -452,15 +454,14 @@ class _QuestionWidgetState extends State<QuestionWidget>{
             _isLocked = false;
           });
         } else {
-          Navigator.pushReplacement(
-            context, 
-            MaterialPageRoute(builder: (context) => ResultPage(score: _score, questions: questions,),
+          Navigator.of(context, rootNavigator: true).pushReplacement( 
+            CupertinoPageRoute(builder: (context) => ResultPage(score: _score, questions: questions,),
             )
           );
         }
       }, 
       child: Text(
-        _questionNumber < questions.length ? 'Next Page' : 'See the result'),
+        _questionNumber < questions.length ? 'learnpage-button-next'.tr() : 'learnpage-button-result'.tr()),
       );
   }
 }

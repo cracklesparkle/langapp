@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets/images/welcomePage/
     - assets/images/mapPage/
+    - assets/images/mapPage/river/
     - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see

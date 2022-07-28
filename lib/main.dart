@@ -46,6 +46,8 @@ class MainApp extends StatelessWidget {
     
     return CupertinoApp(
       theme: CupertinoThemeData(
+        //Force to use light theme
+        brightness: Brightness.light,
         textTheme: CupertinoTextThemeData(
           textStyle: TextStyle(
             fontFamily: 'Montserrat',

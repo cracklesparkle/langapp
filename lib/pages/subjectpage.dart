@@ -103,7 +103,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                       return VideoListPage();
                                     
                                     case "quiz":
-                                      return LearnPage();
+                                      return LearnPage(url: prefService.langs[prefService.langToLearn].url + subjectOption.url);
                                     //if type not set for a subject
                                     default:{
                                       return AudioListPage(url: prefService.langs[prefService.langToLearn].url + subjectOption.url);

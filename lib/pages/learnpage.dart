@@ -4,9 +4,11 @@ import 'package:langapp/helpers/customwidgets.dart';
 
 class LearnPage extends StatelessWidget{
   final int number;
+  final String url;
 
   const LearnPage({
     Key? key,
+    required this.url,
     this.number = 1,
   }) : super(key: key);
 
@@ -17,7 +19,7 @@ class LearnPage extends StatelessWidget{
       //trailing: Icon(CupertinoIcons.globe),
     ),
     child: SafeArea(
-      child: QuestionWidget()
+      child: QuestionWidget(url: url,)
     ),
   );
 }
